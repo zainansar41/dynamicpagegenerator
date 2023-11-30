@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 
 export default function Navbar() {
+  
   return (
     <div className="wrapper">
       <nav>
@@ -23,46 +24,13 @@ export default function Navbar() {
               <Link to="#">About</Link>
             </li>
             <li>
-              <Link to="#" className="desktop-link">
-                Features
-              </Link>
-              <input type="checkbox" id="show-features" />
-              <label htmlFor="show-features">Features</label>
-              <ul>
-                <li>
-                  <Link to="#">Drop Menu 1</Link>
-                </li>
-                <li>
-                  <Link to="#">Drop Menu 2</Link>
-                </li>
-                <li>
-                  <Link to="#">Drop Menu 3</Link>
-                </li>
-                <li>
-                  <Link to="#">Drop Menu 4</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to="#" className="desktop-link">
-                Services
-              </Link>
-              <input type="checkbox" id="show-services" />
-              <label htmlFor="show-services">Services</label>
-              <ul>
-                <li>
-                  <Link to="#">Drop Menu 1</Link>
-                </li>
-                <li>
-                  <Link to="#">Drop Menu 2</Link>
-                </li>
-                <li>
-                  <Link to="#">Drop Menu 3</Link>
-                </li>
-              </ul>
+              <Link to="#">Generate</Link>
             </li>
             <li>
               <Link to="#">Feedback</Link>
+            </li>
+            <li>
+              <Link to="/signin">Login</Link>
             </li>
           </ul>
         </div>
