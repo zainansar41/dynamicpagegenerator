@@ -17,8 +17,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<GeneratePage />} />
-          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/generate" element={<GeneratePage />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
