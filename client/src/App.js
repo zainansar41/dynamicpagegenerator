@@ -4,6 +4,7 @@ import Signup from './pages/AuthPages/Signup';
 import Home from './pages/Home/Home';
 
 import LivePreview from './pages/Generate/LivePreview';
+import GeneratePage from './pages/Generate/GeneratePage';
 
 import {
   BrowserRouter as Router,
@@ -16,7 +17,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<LivePreview />} />
+          <Route path="/" element={<GeneratePage />} />
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
