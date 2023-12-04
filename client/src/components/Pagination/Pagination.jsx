@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import './Pagination.css';
+import React, { useState, useEffect } from "react";
+import "./Pagination.css";
 
-const Pagination = ({ totalItems, itemsPerPage, onPageChange, maxVisiblePages = 10 }) => {
+const Pagination = ({
+  totalItems,
+  itemsPerPage,
+  onPageChange,
+  maxVisiblePages = 10,
+}) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setCurrentPage(1); // Reset to first page when totalItems or itemsPerPage change
+    setCurrentPage(1);
   }, [totalItems, itemsPerPage]);
 
   const handlePageChange = (page) => {
     if (page < 1) {
+      console.log(currentPage);
       setCurrentPage(totalPages); // Go to last page if on the first page and clicking "Previous"
       onPageChange(totalPages);
     } else if (page > totalPages) {
@@ -25,7 +31,10 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, maxVisiblePages = 
   const renderPageNumbers = () => {
     const pageNumbers = [];
 
-    const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages /2));
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisiblePages / 3)
+    );
     const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
     if (startPage > 1) {
@@ -49,12 +58,9 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, maxVisiblePages = 
       pageNumbers.push(
         <li
           key={i}
-          className={`page-item ${i === currentPage ? 'active' : ''}`}
+          className={`page-item ${i === currentPage ? "active" : ""}`}
         >
-          <button
-            className="page-link"
-            onClick={() => handlePageChange(i)}
-          >
+          <button className="page-link" onClick={() => handlePageChange(i)}>
             {i}
           </button>
         </li>
@@ -87,7 +93,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, maxVisiblePages = 
   return (
     <nav aria-label="Pagination">
       <ul className="pagination">
-        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <button
             className="page-link"
             onClick={() => handlePageChange(currentPage - 1)}
@@ -99,7 +105,9 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, maxVisiblePages = 
         {renderPageNumbers()}
 
         <li
-          className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}
+          className={`page-item ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
         >
           <button
             className="page-link"

@@ -39,6 +39,7 @@
   height: calc(100vh - 70px);
   overflow-y: scroll;
   position: relative;
+  overflow-x: hidden;
 }
 
 .rightDiv img {

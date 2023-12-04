@@ -14,16 +14,31 @@ export default function Right({ selectedContent }) {
   const [footerColor, setFooterColor] = useState("#000000");
   const [pageEmail, setPageEmail] = useState("");
   const [pagePhone, setPagePhone] = useState("");
+
+  const [testimoninalText1, setTestimoninalText1] = useState("");
+  const [testimoninalName1, setTestimoninalName1] = useState("");
+  const [testimoninals, setTestimoninals] = useState([]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
   const handleAddLink = () => {
-    // Add the link to the links array
+    console.log(currentPage);
     const newLink = { name: linkName, url: linkUrl };
     setLinks([...links, newLink]);
 
     setLinkName("");
     setLinkUrl("");
+  };
+
+  const handleAddTestimonial = () => {
+    const newTestimonial = {
+      name: testimoninalName1,
+      review: testimoninalText1,
+    };
+    setTestimoninals([...testimoninals, newTestimonial]);
+    setTestimoninalName1("");
+    setTestimoninalText1("");
   };
 
   const handlePreview = () => {
@@ -33,6 +48,7 @@ export default function Right({ selectedContent }) {
     console.log("Footer Color:", footerColor);
     console.log("Email:", pageEmail);
     console.log("Phone:", pagePhone);
+    console.log("Testimonials:", testimoninals);
   };
 
   switch (selectedContent) {
@@ -108,6 +124,38 @@ export default function Right({ selectedContent }) {
       contentToRender = (
         <div>
           <h1>Testimonials</h1>
+          <Pagination
+            totalItems={200}
+            itemsPerPage={10}
+            onPageChange={handlePageChange}
+          />
+          <div className="inputs">
+            <div className="input">
+              <label>Name:</label>
+              <input
+                type="text"
+                value={testimoninalName1}
+                onChange={(e) => setTestimoninalName1(e.target.value)}
+              />
+            </div>
+            <div className="input">
+              <label>Review:</label>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                type="text"
+                value={testimoninalText1}
+                onChange={(e) => setTestimoninalText1(e.target.value)}
+              ></textarea>
+            </div>
+          </div>
+          <div className="button-container">
+            <button onClick={handleAddTestimonial}>Add Testimonial</button>
+            <button>Save</button>
+            <button onClick={handlePreview}>Preview</button>
+          </div>
         </div>
       );
       break;
