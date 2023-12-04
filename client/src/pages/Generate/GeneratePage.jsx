@@ -7,7 +7,6 @@ export default function GeneratePage() {
   const [selectedContent, setSelectedContent] = useState(null);
 
   const handleContentClick = (content) => {
-    console.log(`Selected Content: ${content}`);
     setSelectedContent(content);
   };
 

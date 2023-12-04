@@ -11,6 +11,9 @@ export default function Right({ selectedContent }) {
   const [linkUrl, setLinkUrl] = useState("");
   const [links, setLinks] = useState([]);
   const [navColor, setNavColor] = useState("#000000");
+  const [footerColor, setFooterColor] = useState("#000000");
+  const [pageEmail, setPageEmail] = useState("");
+  const [pagePhone, setPagePhone] = useState("");
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -19,17 +22,17 @@ export default function Right({ selectedContent }) {
     const newLink = { name: linkName, url: linkUrl };
     setLinks([...links, newLink]);
 
-    // Clear the input fields
     setLinkName("");
     setLinkUrl("");
   };
 
   const handlePreview = () => {
-    // Implement preview logic here
-    console.log("Preview button clicked!");
     console.log("Company Name:", companyName);
     console.log("Links:", links);
     console.log("Color:", navColor);
+    console.log("Footer Color:", footerColor);
+    console.log("Email:", pageEmail);
+    console.log("Phone:", pagePhone);
   };
 
   switch (selectedContent) {
@@ -71,7 +74,7 @@ export default function Right({ selectedContent }) {
               </div>
             </div>
             <div className="input">
-              <label>Link Color:</label>
+              <label>NavBar Color:</label>
               <input
                 type="color"
                 value={navColor}
@@ -80,7 +83,7 @@ export default function Right({ selectedContent }) {
             </div>
             <div className="button-container">
               <button onClick={handleAddLink}>Add Link</button>
-              <button >Save</button>
+              <button>Save</button>
               <button onClick={handlePreview}>Preview</button>
             </div>
           </div>
@@ -119,6 +122,45 @@ export default function Right({ selectedContent }) {
       contentToRender = (
         <div>
           <h1>Footer</h1>
+          <Pagination
+            totalItems={200}
+            itemsPerPage={10}
+            onPageChange={handlePageChange}
+          />
+
+          <div className="inputs">
+            <h2>Add Basic Info</h2>
+            <div className="input">
+              <label>Footer Color:</label>
+              <input
+                type="color"
+                value={footerColor}
+                onChange={(e) => setFooterColor(e.target.value)}
+              />
+            </div>
+            <div className="links_input">
+              <div className="input">
+                <label>Email:</label>
+                <input
+                  type="text"
+                  value={pageEmail}
+                  onChange={(e) => setPageEmail(e.target.value)}
+                />
+              </div>
+              <div className="input">
+                <label>Phone number</label>
+                <input
+                  type="text"
+                  value={pagePhone}
+                  onChange={(e) => setPagePhone(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="button-container">
+              <button>Save</button>
+              <button onClick={handlePreview}>Preview</button>
+            </div>
+          </div>
         </div>
       );
       break;
