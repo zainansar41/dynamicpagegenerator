@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const URI = "mongodb+srv://zainansari:zain123@cluster1.mlcu8.mongodb.net/"
+const URI = "mongodb+srv://zainansari:zain123@cluster1.mlcu8.mongodb.net/WebProject"
 
 mongoose.set('strictQuery', true);
 async function connect(){

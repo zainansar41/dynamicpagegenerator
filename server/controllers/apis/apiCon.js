@@ -18,7 +18,7 @@ export const register = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
-      return res.status(400).send({ message: "User already exists" });
+      return res.status(200).send({ error: "User already exists" });
     if (password) {
       bcrypt
         .hash(password, ENV.hashedPasswordLength)
@@ -40,14 +40,14 @@ export const register = async (req, res) => {
               );
               res
                 .status(201)
-                .send({ msg: "You has been register successfully", token });
+                .send({ message: "You has been register successfully", token });
             })
             .catch((error) => {
               res.status(500).send({ error });
             });
         })
         .catch((error) => {
-          return res.send({ error: "unable to hashed passowrd" });
+          return res.status(500).send({ error: "unable to hashed passowrd" });
         });
     }
   } catch (error) {
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
 
     const UserPresent = await User.findOne({ email });
     if (!UserPresent)
-      return res.status(400).send({ message: "User does not exists" });
+      return res.status(203).send({ message: "User does not exists" });
     else {
       bcrypt.compare(password, UserPresent.password).then((result) => {
         if (result) {
@@ -73,10 +73,10 @@ export const login = async (req, res) => {
             ENV.JWT_TOKEN
           );
           res
-            .status(201)
-            .send({ msg: "You has been login successfully", token });
+            .status(200)
+            .send({ message: "You has been login successfully", token });
         } else {
-          res.status(500).send({ error: "unable to login" });
+          res.status(203).send({ message: "password is incorrect" });
         }
       });
     }
