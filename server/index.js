@@ -2,6 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import connect from "./database/conn.js";
+import session from "express-session";
+
+import router from "./routers/router.js";
 
 
 const app = express();
@@ -9,11 +12,15 @@ const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+app.set('view-engine', 'ejs');
+app.use(express.static('public'));
+app.use(session({ secret: "Shh, its a secret!" }));
 
 
 app.get("/", (req, res) => {
   res.send("Hello to Memories API");
 })
+app.use("/", router);
 
 const PORT = 5000;
 
