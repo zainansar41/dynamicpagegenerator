@@ -9,6 +9,8 @@ router.route("/api/get").get(ApiControllers.getMethod);
 router.route("/api/register").post(ApiControllers.register);
 router.route("/api/login").post(ApiControllers.login);
 router.route('/login').get(AppControllers.GetLogin)
+router.route('/signup').post(AppControllers.PostSignup)
+router.route('/login').post(AppControllers.PostLogin)
 
 
 export default router;

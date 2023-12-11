@@ -1,14 +1,14 @@
 <%- include('./partials/header.ejs')%>
     <link rel="stylesheet" href="/css/login.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <section class="wrapper">
         <div class="form signup">
             <header>Signup</header>
-            <form id="signupForm" action="#">
-                <input type="text" placeholder="Email address" required />
+            <form id="signupForm" action="/signup" method="post">
+                <input type="text" id="SignupEmail" name="email" placeholder="Email address" required />
                 <p class="emailerror"></p>
-                <input type="password" placeholder="Password" required />
+                <input type="password" id="Signuppassword" name="password" placeholder="Password" required />
                 <p class="passworderror"></p>
                 <div class="checkbox">
                     <input type="checkbox" id="signupCheck" />
@@ -19,10 +19,10 @@
         </div>
         <div class="form login">
             <header>Login</header>
-            <form id="loginForm" action="#">
-                <input type="text" placeholder="Email address" required />
+            <form id="loginForm" action="/login" method="post">
+                <input type="text" id="LoginEmail" name="email" placeholder="Email address" required />
                 <p class="emailerror"></p>
-                <input type="password" placeholder="Password" required />
+                <input type="password" id="Loginpassword" name="password" placeholder="Password" required />
                 <p class="passworderror"></p>
                 <a href="#">Forgot password?</a>
                 <input type="submit" value="Login" />
@@ -41,40 +41,56 @@
                 signupHeader.on("click", function () {
                     wrapper.removeClass("active");
                 });
-
                 $("#signupForm").submit(function (e) {
                     e.preventDefault();
-                    // Add your signup form validation logic here
-                    const email = $("#signupForm input[type='text']").val();
-                    const password = $("#signupForm input[type='password']").val();
+                    const email = $("#SignupEmail").val();
+                    const password = $("#Signuppassword").val();
 
-                    // Example validation, you can replace it with your own logic
+                    // Example validation, replace with your own logic
                     if (!email || !password) {
                         $(".emailerror").text("Email and password are required");
                         $(".passworderror").text("Email and password are required");
                     } else {
-                        // If validation passes, you can perform signup logic here
-                        // For now, just clearing the error messages
+                        // Clear error messages
                         $(".emailerror").text("");
                         $(".passworderror").text("");
+
+                        // Perform signup logic here
+                        $.post("/signup", { email, password }, function (data) {
+                            if (data.error) {
+                                $(".emailerror").text(data.error);
+                            } else {
+                                // Redirect to the home page after successful signup
+                                window.location.href = "/";
+                            }
+                        });
                     }
                 });
 
                 $("#loginForm").submit(function (e) {
                     e.preventDefault();
-                    // Add your login form validation logic here
-                    const email = $("#loginForm input[type='text']").val();
-                    const password = $("#loginForm input[type='password']").val();
+                    const email = $("#LoginEmail").val();
+                    const password = $("#Loginpassword").val();
 
-                    // Example validation, you can replace it with your own logic
+                    // Example validation, replace with your own logic
+                    console.log(email, password);
                     if (!email || !password) {
                         $(".emailerror").text("Email and password are required");
                         $(".passworderror").text("Email and password are required");
                     } else {
-                        // If validation passes, you can perform login logic here
-                        // For now, just clearing the error messages
+                        // Clear error messages
                         $(".emailerror").text("");
                         $(".passworderror").text("");
+
+                        // Perform login logic here
+                        $.post("/login", { email, password }, function (data) {
+                            if (data.error) {
+                                $(".emailerror").text(data.error);
+                            } else {
+                                // Redirect to the home page after successful login
+                                window.location.href = "/";
+                            }
+                        });
                     }
                 });
             });
