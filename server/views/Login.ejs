@@ -1,0 +1,82 @@
+<%- include('./partials/header.ejs')%>
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Include jQuery -->
+
+    <section class="wrapper">
+        <div class="form signup">
+            <header>Signup</header>
+            <form id="signupForm" action="#">
+                <input type="text" placeholder="Email address" required />
+                <p class="emailerror"></p>
+                <input type="password" placeholder="Password" required />
+                <p class="passworderror"></p>
+                <div class="checkbox">
+                    <input type="checkbox" id="signupCheck" />
+                    <label for="signupCheck">I accept all terms & conditions</label>
+                </div>
+                <input type="submit" value="Signup" />
+            </form>
+        </div>
+        <div class="form login">
+            <header>Login</header>
+            <form id="loginForm" action="#">
+                <input type="text" placeholder="Email address" required />
+                <p class="emailerror"></p>
+                <input type="password" placeholder="Password" required />
+                <p class="passworderror"></p>
+                <a href="#">Forgot password?</a>
+                <input type="submit" value="Login" />
+            </form>
+        </div>
+        <script>
+            $(document).ready(function () {
+                const wrapper = $(".wrapper");
+                const signupHeader = $(".signup header");
+                const loginHeader = $(".login header");
+
+                loginHeader.on("click", function () {
+                    wrapper.addClass("active");
+                });
+
+                signupHeader.on("click", function () {
+                    wrapper.removeClass("active");
+                });
+
+                $("#signupForm").submit(function (e) {
+                    e.preventDefault();
+                    // Add your signup form validation logic here
+                    const email = $("#signupForm input[type='text']").val();
+                    const password = $("#signupForm input[type='password']").val();
+
+                    // Example validation, you can replace it with your own logic
+                    if (!email || !password) {
+                        $(".emailerror").text("Email and password are required");
+                        $(".passworderror").text("Email and password are required");
+                    } else {
+                        // If validation passes, you can perform signup logic here
+                        // For now, just clearing the error messages
+                        $(".emailerror").text("");
+                        $(".passworderror").text("");
+                    }
+                });
+
+                $("#loginForm").submit(function (e) {
+                    e.preventDefault();
+                    // Add your login form validation logic here
+                    const email = $("#loginForm input[type='text']").val();
+                    const password = $("#loginForm input[type='password']").val();
+
+                    // Example validation, you can replace it with your own logic
+                    if (!email || !password) {
+                        $(".emailerror").text("Email and password are required");
+                        $(".passworderror").text("Email and password are required");
+                    } else {
+                        // If validation passes, you can perform login logic here
+                        // For now, just clearing the error messages
+                        $(".emailerror").text("");
+                        $(".passworderror").text("");
+                    }
+                });
+            });
+        </script>
+    </section>

@@ -8,7 +8,7 @@ const router = Router();
 router.route("/api/get").get(ApiControllers.getMethod);
 router.route("/api/register").post(ApiControllers.register);
 router.route("/api/login").post(ApiControllers.login);
-
+router.route('/login').get(AppControllers.GetLogin)
 
 
 export default router;
