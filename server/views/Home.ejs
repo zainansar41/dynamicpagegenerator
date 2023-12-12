@@ -1,0 +1,81 @@
+<%- include('./partials/header.ejs') %>
+<head><link rel="stylesheet" href="/css/home.css"></head>
+
+    <body>
+
+        <div class="navbar_form">
+            <form id="customizationForm">
+                <div class="input_div">
+                    <div class="single_div">
+                        <label for="logo">Logo Class:</label>
+                        <input type="text" id="logo" name="logo" required>
+                    </div>
+                </div>
+
+                <div class="input_div">
+                    <div class="single_div">
+
+                        <label for="link">Link:</label>
+                        <input type="text" id="link" name="link" required>
+                    </div>
+                    <div class="single_div">
+
+                        <label for="linkAddress">Link Address:</label>
+                        <input type="text" id="linkAddress" name="linkAddress" required>
+                    </div>
+                </div>
+
+                <div class="input_div">
+                    <div class="single_div">
+
+                        <label for="linkAddress">Parent class:</label>
+                        <input type="text" id="ParentClass" name="ParentClass" required>
+                    </div>
+                    <div class="single_div">
+
+
+                        <label for="navbarLinkCode">Navbar Link Code:</label>
+                        <input type="text" id="navbarLinkCode" name="navbarLinkCode" required>
+                    </div>
+                </div>
+
+                <div class="input_div">
+                    <div class="single_div code_div">
+
+                        <label for="htmlCode">HTML Code:</label>
+                        <textarea id="htmlCode" name="htmlCode" placeholder="Paste HTML code here..."
+                            required></textarea>
+                    </div>
+                    <div class="single_div code_div">
+
+                        <label for="cssCode">CSS Code:</label>
+                        <textarea id="cssCode" name="cssCode" placeholder="Paste CSS code here..." required></textarea>
+                    </div>
+                </div>
+
+                <button class="btn-shine">
+                    <span>upload</span>
+                </button>
+            </form>
+        </div>
+
+    </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let textareas = document.querySelectorAll("textarea");
+
+            textareas.forEach((textarea) => {
+                textarea.addEventListener("input", (e) => {
+                    textarea.style.height = "19px";
+                    let newHeight = e.target.scrollHeight;
+
+                    if (newHeight <= 200) {
+                        textarea.style.height = `${newHeight}px`;
+                    } else {
+                        textarea.style.height = "300px";
+                    }
+                });
+            });
+        });
+    </script>
+    <%- include('./partials/footer.ejs') %>

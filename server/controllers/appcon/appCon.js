@@ -75,3 +75,11 @@ export async function PostLogin(req, res) {
     res.status(500).send({ message: error.message });
   }
 }
+
+export async function GetHome(req, res) {
+  try {
+    res.render("Home", { user: req.session.user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}

@@ -18,7 +18,7 @@ app.use(session({ secret: "Shh, its a secret!" }));
 
 app.get("/", (req, res) => {
   res.send("Hello to Memories API");
-})
+}) 
 app.use("/", router);
 
 const PORT = 5000;

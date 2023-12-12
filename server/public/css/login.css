@@ -12,7 +12,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0faff;
 }
 .wrapper {
   position: relative;
@@ -92,7 +91,7 @@ body {
   margin-top: 40px;
 }
 form
-  input {
+  .LoginInput {
   height: 60px;
   outline: none;
   border: none;
