@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import User from "../../models/user.js";
-import ENV from "../../config.js";
+import Navbar from "../../models/navbar.js";
 
 export async function GetLogin(req, res) {
   try {
@@ -79,6 +78,35 @@ export async function PostLogin(req, res) {
 export async function GetHome(req, res) {
   try {
     res.render("Home", { user: req.session.user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function uploadNavbar(req, res) {
+  try {
+    
+    const { logo, link, linkAddress, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName } = req.body;
+    const newNavbar = new Navbar({
+      logoClass: logo,
+      linkName:link,
+      linkAddress,
+      linkParentClass:ParentClass,
+      linkCode:navbarLinkCode,
+      htmlCode,
+      cssCode,
+      image:fileName
+    });
+
+    await newNavbar.save();
+    
+
+    res.status(201).send({
+      message: "You have been registered successfully",
+      user: req.session.user,
+    });
+
+
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

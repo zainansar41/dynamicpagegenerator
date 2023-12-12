@@ -13,6 +13,7 @@ router.route('/login').get(AppControllers.GetLogin)
 router.route('/signup').post(AppControllers.PostSignup)
 router.route('/login').post(AppControllers.PostLogin)
 router.route('/home').get(appAuth, AppControllers.GetHome)
+router.route('/uploadNavbar').post(AppControllers.uploadNavbar)
 
 
 export default router;
