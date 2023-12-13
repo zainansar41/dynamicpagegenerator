@@ -14,6 +14,7 @@ router.route('/signup').post(AppControllers.PostSignup)
 router.route('/login').post(AppControllers.PostLogin)
 router.route('/home').get(appAuth, AppControllers.GetHome)
 router.route('/uploadNavbar').post(AppControllers.uploadNavbar)
+router.route('/api/navbars').get(ApiControllers.getAllNavbars)
 
 
 export default router;

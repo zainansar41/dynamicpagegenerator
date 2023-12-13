@@ -86,13 +86,12 @@ export async function GetHome(req, res) {
 export async function uploadNavbar(req, res) {
   try {
     
-    const { logo, link, linkAddress, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName, name } = req.body;
+    const { logo, linkClass, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName, name } = req.body;
     console.log(req.body);
     const newNavbar = new Navbar({
       navbarName:name,
       logoClass: logo,
-      linkName:link,
-      linkAddress,
+      linkClass,
       linkParentClass:ParentClass,
       linkCode:navbarLinkCode,
       htmlCode,

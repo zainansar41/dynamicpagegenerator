@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const navbarSchema = new Schema({
     navbarName:String,
     logoClass: String,
-    linkName: String,
-    linkAddress: String,
+    linkClass: String,
     linkParentClass: String,
     linkCode:String,
     htmlCode:String,

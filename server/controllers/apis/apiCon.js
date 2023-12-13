@@ -1,15 +1,16 @@
 import User from "../../models/user.js";
+import Navbar from "../../models/navbar.js";
 import ENV from "../../config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const getMethod = async (req, res) => {
-    try {
-        res.status(200).send({ message: "Welcome to API" });
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-}
+  try {
+    res.status(200).send({ message: "Welcome to API" });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
 
 export const register = async (req, res) => {
   try {
@@ -84,3 +85,12 @@ export const login = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+export async function getAllNavbars(req, res) {
+  try {
+    const navbars = await Navbar.find();
+    res.status(200).send(navbars);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
