@@ -86,8 +86,10 @@ export async function GetHome(req, res) {
 export async function uploadNavbar(req, res) {
   try {
     
-    const { logo, link, linkAddress, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName } = req.body;
+    const { logo, link, linkAddress, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName, name } = req.body;
+    console.log(req.body);
     const newNavbar = new Navbar({
+      navbarName:name,
       logoClass: logo,
       linkName:link,
       linkAddress,
@@ -95,7 +97,8 @@ export async function uploadNavbar(req, res) {
       linkCode:navbarLinkCode,
       htmlCode,
       cssCode,
-      image:fileName
+      image:fileName,
+      creator:req.session.user.name
     });
 
     await newNavbar.save();
@@ -105,8 +108,6 @@ export async function uploadNavbar(req, res) {
       message: "You have been registered successfully",
       user: req.session.user,
     });
-
-
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
