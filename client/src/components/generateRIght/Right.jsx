@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import generateBG from "../../assets/generateBG.jpeg";
 import Pagination from "../Pagination/Pagination";
 import "./right.css";
 
+import { getNavbars } from "../../Hooks/hooks";
+
 export default function Right({ selectedContent }) {
   let contentToRender;
+  const [navbars, setNavbars] = useState([]);
+  //cssCode:"", htmlCode:"", linkClass:"", linkCode:"", linkParentClass:"", logoClass:""
+  const [navbarData, setNavbarData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [companyName, setCompanyName] = useState("");
   const [linkName, setLinkName] = useState("");
@@ -18,6 +23,58 @@ export default function Right({ selectedContent }) {
   const [testimoninalText1, setTestimoninalText1] = useState("");
   const [testimoninalName1, setTestimoninalName1] = useState("");
   const [testimoninals, setTestimoninals] = useState([]);
+
+  const updateHTML = (html) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const logo = doc.getElementsByClassName(navbarData.logoClass);
+
+    if (logo.length) {
+      logo[0].innerHTML = companyName;
+    }
+
+    const linkParentElements = doc.getElementsByClassName(
+      navbarData.linkParentClass
+    );
+
+    if (linkParentElements.length) {
+      // Iterate over each linkParentElement and add links
+      linkParentElements[0].innerHTML = ""; // Clear existing content
+
+      links.forEach((link) => {
+        const linkDoc = parser.parseFromString(
+          navbarData.linkCode,
+          "text/html"
+        );
+        const mainLink = linkDoc.body.childNodes;
+
+        // Iterate over child nodes and append each one
+        for (let i = 0; i < mainLink.length; i++) {
+          linkParentElements[0].appendChild(mainLink[i].cloneNode(true));
+        }
+      });
+    }
+
+    // Use Array.from to convert HTMLCollection to an array
+    const linkClass = Array.from(
+      doc.getElementsByClassName(navbarData.linkClass)
+    );
+    linkClass.forEach((link, index) => {
+      link.innerHTML = links[index].name;
+      link.href = links[index].url;
+    });
+
+    // Get the first 'nav' element
+    const nav = doc.getElementsByTagName("nav")[0];
+
+    // Serialize the 'nav' element
+    let updatedHtml = new XMLSerializer().serializeToString(nav);
+    updatedHtml = updatedHtml.replace(
+      /--navbar-primary-color\s*:\s*#[0-9a-fA-F]{6}/g,
+      `--navbar-primary-color: ${navColor}`
+    );
+    console.log(updatedHtml);
+  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -42,14 +99,16 @@ export default function Right({ selectedContent }) {
   };
 
   const handlePreview = () => {
-    console.log("Company Name:", companyName);
-    console.log("Links:", links);
-    console.log("Color:", navColor);
-    console.log("Footer Color:", footerColor);
-    console.log("Email:", pageEmail);
-    console.log("Phone:", pagePhone);
-    console.log("Testimonials:", testimoninals);
+    updateHTML(navbarData.htmlCode);
   };
+
+  useEffect(() => {
+    getNavbars().then((res) => {
+      console.log(res);
+      setNavbars(res.data);
+      setNavbarData(res.data[0]);
+    });
+  }, []);
 
   switch (selectedContent) {
     case "Navbar":
@@ -57,8 +116,8 @@ export default function Right({ selectedContent }) {
         <div className="container">
           <h1>{selectedContent}</h1>
           <Pagination
-            totalItems={200}
-            itemsPerPage={10}
+            totalItems={10}
+            itemsPerPage={3}
             onPageChange={handlePageChange}
           />
           <div className="inputs">
@@ -90,7 +149,7 @@ export default function Right({ selectedContent }) {
               </div>
             </div>
             <div className="input">
-              <label>NavBar Color:</label>
+              <label>NavBar Primary Color:</label>
               <input
                 type="color"
                 value={navColor}

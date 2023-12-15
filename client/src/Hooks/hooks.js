@@ -21,3 +21,12 @@ export async function loginUser(credentials){
         return error
     }
 }
+
+export async function getNavbars(){
+    try {
+        const {data, status} = await axios.get('/api/navbars')
+        return {data, status}
+    } catch (error) {
+        return error
+    }
+}
