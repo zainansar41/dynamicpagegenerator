@@ -75,3 +75,16 @@ input[type="color"] {
   width: 50%;
   height: 30px;
 }
+
+.preview {
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  font-weight: 900;
+  color: #ccc;
+  background-color: #171c24;
+}
+.preview:hover {
+  color: #fff;
+  background-color: black;
+}

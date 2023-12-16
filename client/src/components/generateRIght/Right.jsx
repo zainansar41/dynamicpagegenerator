@@ -1,91 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import generateBG from "../../assets/generateBG.jpeg";
 import Pagination from "../Pagination/Pagination";
 import "./right.css";
+import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 
-import { getNavbars } from "../../Hooks/hooks";
 
 export default function Right({ selectedContent }) {
+  const navigate = useNavigate();
   let contentToRender;
-  const [navbars, setNavbars] = useState([]);
   //cssCode:"", htmlCode:"", linkClass:"", linkCode:"", linkParentClass:"", logoClass:""
-  const [navbarData, setNavbarData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [companyName, setCompanyName] = useState("");
-  const [linkName, setLinkName] = useState("");
-  const [linkUrl, setLinkUrl] = useState("");
-  const [links, setLinks] = useState([]);
-  const [navColor, setNavColor] = useState("#000000");
   const [footerColor, setFooterColor] = useState("#000000");
   const [pageEmail, setPageEmail] = useState("");
   const [pagePhone, setPagePhone] = useState("");
-
   const [testimoninalText1, setTestimoninalText1] = useState("");
   const [testimoninalName1, setTestimoninalName1] = useState("");
   const [testimoninals, setTestimoninals] = useState([]);
 
-  const updateHTML = (html) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const logo = doc.getElementsByClassName(navbarData.logoClass);
-
-    if (logo.length) {
-      logo[0].innerHTML = companyName;
-    }
-
-    const linkParentElements = doc.getElementsByClassName(
-      navbarData.linkParentClass
-    );
-
-    if (linkParentElements.length) {
-      // Iterate over each linkParentElement and add links
-      linkParentElements[0].innerHTML = ""; // Clear existing content
-
-      links.forEach((link) => {
-        const linkDoc = parser.parseFromString(
-          navbarData.linkCode,
-          "text/html"
-        );
-        const mainLink = linkDoc.body.childNodes;
-
-        // Iterate over child nodes and append each one
-        for (let i = 0; i < mainLink.length; i++) {
-          linkParentElements[0].appendChild(mainLink[i].cloneNode(true));
-        }
-      });
-    }
-
-    // Use Array.from to convert HTMLCollection to an array
-    const linkClass = Array.from(
-      doc.getElementsByClassName(navbarData.linkClass)
-    );
-    linkClass.forEach((link, index) => {
-      link.innerHTML = links[index].name;
-      link.href = links[index].url;
-    });
-
-    // Get the first 'nav' element
-    const nav = doc.getElementsByTagName("nav")[0];
-
-    // Serialize the 'nav' element
-    let updatedHtml = new XMLSerializer().serializeToString(nav);
-    updatedHtml = updatedHtml.replace(
-      /--navbar-primary-color\s*:\s*#[0-9a-fA-F]{6}/g,
-      `--navbar-primary-color: ${navColor}`
-    );
-    console.log(updatedHtml);
+  const [links, setLinks] = useState([]);
+  const handleAddLink = (newLink) => {
+    setLinks([...links, newLink]);
   };
+
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-  const handleAddLink = () => {
-    console.log(currentPage);
-    const newLink = { name: linkName, url: linkUrl };
-    setLinks([...links, newLink]);
-
-    setLinkName("");
-    setLinkUrl("");
   };
 
   const handleAddTestimonial = () => {
@@ -99,71 +39,13 @@ export default function Right({ selectedContent }) {
   };
 
   const handlePreview = () => {
-    updateHTML(navbarData.htmlCode);
+    navigate("/preview", { state: { html: localStorage.getItem("navbarHtml"), css: localStorage.getItem("navbarCSS") } });
   };
 
-  useEffect(() => {
-    getNavbars().then((res) => {
-      console.log(res);
-      setNavbars(res.data);
-      setNavbarData(res.data[0]);
-    });
-  }, []);
 
   switch (selectedContent) {
     case "Navbar":
-      contentToRender = (
-        <div className="container">
-          <h1>{selectedContent}</h1>
-          <Pagination
-            totalItems={10}
-            itemsPerPage={3}
-            onPageChange={handlePageChange}
-          />
-          <div className="inputs">
-            <h2>Add Basic Info</h2>
-            <div className="input">
-              <label>Company Name:</label>
-              <input
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-            </div>
-            <div className="links_input">
-              <div className="input">
-                <label>Link Name:</label>
-                <input
-                  type="text"
-                  value={linkName}
-                  onChange={(e) => setLinkName(e.target.value)}
-                />
-              </div>
-              <div className="input">
-                <label>Link URL:</label>
-                <input
-                  type="text"
-                  value={linkUrl}
-                  onChange={(e) => setLinkUrl(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input">
-              <label>NavBar Primary Color:</label>
-              <input
-                type="color"
-                value={navColor}
-                onChange={(e) => setNavColor(e.target.value)}
-              />
-            </div>
-            <div className="button-container">
-              <button onClick={handleAddLink}>Add Link</button>
-              <button>Save</button>
-              <button onClick={handlePreview}>Preview</button>
-            </div>
-          </div>
-        </div>
-      );
+      contentToRender = <Navbar selectedContent={selectedContent} onAddLink={handleAddLink}/>;
       break;
     case "Hero Section":
       contentToRender = (
@@ -213,7 +95,6 @@ export default function Right({ selectedContent }) {
           <div className="button-container">
             <button onClick={handleAddTestimonial}>Add Testimonial</button>
             <button>Save</button>
-            <button onClick={handlePreview}>Preview</button>
           </div>
         </div>
       );
@@ -265,7 +146,6 @@ export default function Right({ selectedContent }) {
             </div>
             <div className="button-container">
               <button>Save</button>
-              <button onClick={handlePreview}>Preview</button>
             </div>
           </div>
         </div>
@@ -311,5 +191,12 @@ export default function Right({ selectedContent }) {
       );
   }
 
-  return <>{contentToRender}</>;
+  return (
+    <>
+      {contentToRender}{" "}
+      <button className="preview" onClick={handlePreview}>
+        Preview
+      </button>
+    </>
+  );
 }
