@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from "react";
+// Navbar.jsx
+
+import React, { useState, useEffect } from "react";
 import Pagination from "../Pagination/Pagination";
 import "./right.css";
 import { modifyNavbarHtml } from "../../Helper/helper";
 import { getNavbars } from "../../Hooks/hooks";
+import Card from "../componentCard/Card";
 
-
-export default function Navbar({selectedContent, onAddLink }) {
+export default function Navbar({ selectedContent, onAddLink }) {
   const [navbars, setNavbars] = useState([]);
-  //cssCode:"", htmlCode:"", linkClass:"", linkCode:"", linkParentClass:"", logoClass:""
   const [navbarData, setNavbarData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [companyName, setCompanyName] = useState("");
@@ -15,6 +16,8 @@ export default function Navbar({selectedContent, onAddLink }) {
   const [linkUrl, setLinkUrl] = useState("");
   const [links, setLinks] = useState([]);
   const [navColor, setNavColor] = useState("#000000");
+  const itemsPerPage = 3;
+
   useEffect(() => {
     getNavbars().then((res) => {
       console.log(res);
@@ -22,28 +25,57 @@ export default function Navbar({selectedContent, onAddLink }) {
       setNavbarData(res.data[0]);
     });
   }, []);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   const handleAddLink = () => {
-    console.log(currentPage);
     const newLink = { name: linkName, url: linkUrl };
     setLinks([...links, newLink]);
-    onAddLink(newLink); // Call the function passed from Right
+    onAddLink(newLink);
     setLinkName("");
     setLinkUrl("");
   };
 
   const handleSave = () => {
-    modifyNavbarHtml(navbarData.htmlCode, navbarData, links, companyName, navColor);
-  }
+    modifyNavbarHtml(
+      navbarData.htmlCode,
+      navbarData,
+      links,
+      companyName,
+      navColor
+    );
+  };
+
+  const handleCardClick = (index) => {
+    console.log("handleCardClick called");
+    console.log(navbars[index]);
+    setNavbarData(navbars[index]);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedNavbars = navbars.slice(startIndex, endIndex);
 
   return (
     <div className="container">
       <h1>{selectedContent}</h1>
+      <div className="cards_container">
+        {displayedNavbars.map((navbar, index) => (
+          <button onClick={() => handleCardClick(index)} style={{background:'none', border:'none'}}>
+            <Card
+              key={navbar._id}
+              image={navbar.image}
+              name={navbar.navbarName}
+              author={navbar.creator}
+            />
+          </button>
+        ))}
+      </div>
       <Pagination
-        totalItems={10}
-        itemsPerPage={3}
+        totalItems={navbars.length}
+        itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />
       <div className="inputs">

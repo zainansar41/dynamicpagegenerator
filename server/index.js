@@ -21,6 +21,8 @@ app.get("/", (req, res) => {
   res.send("Hello to Memories API");
 });
 app.use("/", router);
+app.use('/images', express.static("images"))
+
 
 const PORT = 5000;
 
