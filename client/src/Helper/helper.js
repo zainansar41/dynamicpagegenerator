@@ -48,3 +48,55 @@ export function modifyNavbarHtml(html, navbarData, links, companyName, navColor)
   localStorage.setItem("navbarHtml", updatedHtml);
   localStorage.setItem("navbarCSS", navbarData.cssCode);
 }
+
+
+export function modifyTestimonialHtml(html, TestimonialData, testimoninals, heading, subheading) {
+  const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const headingElement = doc.getElementsByClassName(TestimonialData.heading);
+    if(headingElement.length){
+      headingElement[0].innerHTML = heading;
+    }
+    const subheadingElement = doc.getElementsByClassName(TestimonialData.subheading);
+    if(subheadingElement.length){
+      subheadingElement[0].innerHTML = subheading;
+    }
+
+    const TestimonialParentElement = doc.getElementsByClassName(TestimonialData.parentClass);
+    if(TestimonialParentElement.length){
+      TestimonialParentElement[0].innerHTML = "";
+      testimoninals.forEach((testimonial) => {
+        const testimonialDoc = parser.parseFromString(TestimonialData.testimonialCode, "text/html");
+        const mainDoc = testimonialDoc.body.childNodes;
+        for (let i = 0; i < mainDoc.length; i++) {
+          TestimonialParentElement[0].appendChild(mainDoc[i].cloneNode(true));
+        }
+      });
+      const TestimonialsClass = Array.from(
+        doc.getElementsByClassName("testimonial")
+      );
+
+      TestimonialsClass.forEach((testimonial, index) => {
+        const testimonialName = testimonial.getElementsByClassName(
+          TestimonialData.nameClass
+        );
+        if (testimonialName.length) {
+          testimonialName[0].innerHTML = testimoninals[index].name;
+        }
+        const testimonialText = testimonial.getElementsByClassName(
+          TestimonialData.reviewClass
+        );
+        if (testimonialText.length) {
+          testimonialText[0].innerHTML = testimoninals[index].review;
+        }
+      });
+
+      const section = doc.getElementsByTagName("section")[0];
+      let updatedHtml = new XMLSerializer().serializeToString(section);
+      console.log(updatedHtml);
+      localStorage.setItem("testimonialHtml", updatedHtml);
+      localStorage.setItem("testimonialCSS", TestimonialData.cssCode);
+
+    }
+
+}

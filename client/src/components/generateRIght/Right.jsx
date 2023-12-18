@@ -3,20 +3,17 @@ import generateBG from "../../assets/generateBG.jpeg";
 import Pagination from "../Pagination/Pagination";
 import "./right.css";
 import Navbar from "./Navbar";
+import Testimonial from "./Testmonial"
 import { useNavigate } from "react-router-dom";
 
 
 export default function Right({ selectedContent }) {
   const navigate = useNavigate();
   let contentToRender;
-  //cssCode:"", htmlCode:"", linkClass:"", linkCode:"", linkParentClass:"", logoClass:""
   const [currentPage, setCurrentPage] = useState(1);
   const [footerColor, setFooterColor] = useState("#000000");
   const [pageEmail, setPageEmail] = useState("");
   const [pagePhone, setPagePhone] = useState("");
-  const [testimoninalText1, setTestimoninalText1] = useState("");
-  const [testimoninalName1, setTestimoninalName1] = useState("");
-  const [testimoninals, setTestimoninals] = useState([]);
 
   const [links, setLinks] = useState([]);
   const handleAddLink = (newLink) => {
@@ -28,19 +25,29 @@ export default function Right({ selectedContent }) {
     setCurrentPage(page);
   };
 
-  const handleAddTestimonial = () => {
-    const newTestimonial = {
-      name: testimoninalName1,
-      review: testimoninalText1,
-    };
-    setTestimoninals([...testimoninals, newTestimonial]);
-    setTestimoninalName1("");
-    setTestimoninalText1("");
-  };
 
   const handlePreview = () => {
-    navigate("/preview", { state: { html: localStorage.getItem("navbarHtml"), css: localStorage.getItem("navbarCSS") } });
+    // Get HTML and CSS from localStorage or your state
+    const navbarHtml = localStorage.getItem("navbarHtml");
+    const testimonialHtml = localStorage.getItem("testimonialHtml");
+    const concatenatedHtml = navbarHtml + testimonialHtml;
+    console.log(concatenatedHtml);
+    // remove xmlns="http://www.w3.org/1999/xhtml 
+    // concatenatedHtml = concatenatedHtml.replace('xmlns="http://www.w3.org/1999/xhtml"', "");
+  
+    const navbarCSS = localStorage.getItem("navbarCSS");
+    const testimonialCSS = localStorage.getItem("testimonialCSS");
+    const concatenatedCSS = navbarCSS + testimonialCSS;
+  
+    // Pass the concatenated HTML and CSS to the "/preview" route
+    navigate("/preview", {
+      state: {
+        html: concatenatedHtml,
+        css: concatenatedCSS,
+      },
+    });
   };
+  
 
 
   switch (selectedContent) {
@@ -62,42 +69,8 @@ export default function Right({ selectedContent }) {
       );
       break;
     case "Testimonials":
-      contentToRender = (
-        <div>
-          <h1>Testimonials</h1>
-          <Pagination
-            totalItems={200}
-            itemsPerPage={10}
-            onPageChange={handlePageChange}
-          />
-          <div className="inputs">
-            <div className="input">
-              <label>Name:</label>
-              <input
-                type="text"
-                value={testimoninalName1}
-                onChange={(e) => setTestimoninalName1(e.target.value)}
-              />
-            </div>
-            <div className="input">
-              <label>Review:</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                type="text"
-                value={testimoninalText1}
-                onChange={(e) => setTestimoninalText1(e.target.value)}
-              ></textarea>
-            </div>
-          </div>
-          <div className="button-container">
-            <button onClick={handleAddTestimonial}>Add Testimonial</button>
-            <button>Save</button>
-          </div>
-        </div>
-      );
+      contentToRender = <Testimonial selectedContent={selectedContent} onAddLink={handleAddLink}/>;
+
       break;
     case "Forms":
       contentToRender = (

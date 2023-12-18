@@ -132,21 +132,21 @@ export async function GetTestimonial(req, res) {
 export async function uploadTestimonial(req, res){
   try {
 
-    const {testimonialName, heading, subheading, parentClass, testimonialCode, htmlCode, cssCode, reviewClass, nameClass, imageClass, image} = req.body;
+    const {name, headingClass, subHeadingClass, ParentClass, TestimonialCode, ReviewClass, NameClass, htmlCode, cssCode, fileName, ImageClass} = req.body;
     console.log(req.body);
 
     const newTestimonial = new Testimonial({
-      testimonialName,
-      heading,
-      subheading,
-      parentClass,
-      testimonialCode,
+      testimonialName: name,
+      heading: headingClass,
+      subheading: subHeadingClass,
+      parentClass: ParentClass,
+      testimonialCode: TestimonialCode,
       htmlCode,
       cssCode,
-      reviewClass,
-      nameClass,
-      imageClass,
-      image,
+      reviewClass: ReviewClass,
+      nameClass: NameClass,
+      imageClass: ImageClass,
+      image: fileName,
       creator: req.session.user.name
     })
 

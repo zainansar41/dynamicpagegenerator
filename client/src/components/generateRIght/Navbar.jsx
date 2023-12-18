@@ -23,6 +23,8 @@ export default function Navbar({ selectedContent, onAddLink }) {
       console.log(res);
       setNavbars(res.data);
       setNavbarData(res.data[0]);
+      localStorage.setItem("navbarHtml", "");
+      localStorage.setItem("navbarCSS", "");
     });
   }, []);
 

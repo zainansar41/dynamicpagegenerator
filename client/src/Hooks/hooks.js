@@ -30,3 +30,11 @@ export async function getNavbars(){
         return error
     }
 }
+export async function getTestimonials(){
+    try {
+        const {data, status} = await axios.get('/api/testimonials')
+        return {data, status}
+    } catch (error) {
+        return error
+    }
+}
