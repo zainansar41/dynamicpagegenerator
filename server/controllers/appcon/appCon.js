@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../../models/user.js";
 import Navbar from "../../models/navbar.js";
+import Testimonial from "../../models/testimonial.js";
 
 export async function GetLogin(req, res) {
   try {
@@ -24,7 +25,7 @@ export async function PostSignup(req, res) {
         const newUser = new User({
           name,
           email,
-          role: 'admin',
+          role: "admin",
           password: hashedpassword,
         });
 
@@ -85,28 +86,78 @@ export async function GetHome(req, res) {
 
 export async function uploadNavbar(req, res) {
   try {
-    
-    const { logo, linkClass, ParentClass, navbarLinkCode, htmlCode, cssCode, fileName, name } = req.body;
-    console.log(req.body);
-    const newNavbar = new Navbar({
-      navbarName:name,
-      logoClass: logo,
+    const {
+      logo,
       linkClass,
-      linkParentClass:ParentClass,
-      linkCode:navbarLinkCode,
+      ParentClass,
+      navbarLinkCode,
       htmlCode,
       cssCode,
-      image:fileName,
-      creator:req.session.user.name
+      fileName,
+      name,
+    } = req.body;
+    console.log(req.body);
+    const newNavbar = new Navbar({
+      navbarName: name,
+      logoClass: logo,
+      linkClass,
+      linkParentClass: ParentClass,
+      linkCode: navbarLinkCode,
+      htmlCode,
+      cssCode,
+      image: fileName,
+      creator: req.session.user.name,
     });
 
     await newNavbar.save();
-    
 
     res.status(201).send({
-      message: "You have been registered successfully",
+      message: "uploaded successfully",
       user: req.session.user,
     });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function GetTestimonial(req, res) {
+  try {
+    res.render("Testimonials", { user: req.session.user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+
+export async function uploadTestimonial(req, res){
+  try {
+
+    const {testimonialName, heading, subheading, parentClass, testimonialCode, htmlCode, cssCode, reviewClass, nameClass, imageClass, image} = req.body;
+    console.log(req.body);
+
+    const newTestimonial = new Testimonial({
+      testimonialName,
+      heading,
+      subheading,
+      parentClass,
+      testimonialCode,
+      htmlCode,
+      cssCode,
+      reviewClass,
+      nameClass,
+      imageClass,
+      image,
+      creator: req.session.user.name
+    })
+
+    await newTestimonial.save();
+
+    res.status(201).send({
+      message: "uploaded successfully",
+      user: req.session.user,
+    });
+
+
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

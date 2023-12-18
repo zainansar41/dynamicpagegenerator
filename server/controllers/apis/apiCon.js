@@ -1,5 +1,6 @@
 import User from "../../models/user.js";
 import Navbar from "../../models/navbar.js";
+import Testimonial from "../../models/testimonial.js"
 import ENV from "../../config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -90,6 +91,15 @@ export async function getAllNavbars(req, res) {
   try {
     const navbars = await Navbar.find();
     res.status(200).send(navbars);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function GetAllTestimonial(req, res) {
+  try {
+    const testimonials = await Testimonial.find();
+    res.status(200).send(testimonials);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

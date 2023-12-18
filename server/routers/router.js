@@ -15,6 +15,9 @@ router.route('/login').post(AppControllers.PostLogin)
 router.route('/home').get(appAuth, AppControllers.GetHome)
 router.route('/uploadNavbar').post(AppControllers.uploadNavbar)
 router.route('/api/navbars').get(ApiControllers.getAllNavbars)
+router.route('/testimonial').get(appAuth,AppControllers.GetTestimonial)
+router.route('/uploadTestimonial').post(AppControllers.uploadTestimonial)
+router.route('/api/testimonials').get(ApiControllers.GetAllTestimonial)
 
 
 export default router;

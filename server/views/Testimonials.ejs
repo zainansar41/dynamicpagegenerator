@@ -1,29 +1,27 @@
-<%- include('./partials/header.ejs') %>
-
-    <head>
-        <link rel="stylesheet" href="/css/home.css">
-    </head>
+<%- include('./partials/header.ejs')%>
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <body>
 
         <div class="navbar_form">
-            <form id="customizationForm" class="customizationForm">
+            <form id="TestimonialForm" class="customizationForm">
                 <div class="input_div">
                     <div class="single_div">
-                        <label for="name">Navbar Name:</label>
+                        <label for="name">Testimonial Name:</label>
                         <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="single_div">
-                        <label for="logo">Logo Class:</label>
-                        <input type="text" id="logo" name="logo" required>
                     </div>
                 </div>
 
                 <div class="input_div">
                     <div class="single_div">
 
-                        <label for="linkClass">Link Class:</label>
-                        <input type="text" id="linkClass" name="linkClass" required>
+                        <label for="headingClass">heading Class:</label>
+                        <input type="text" id="headingClass" name="headingClass" required>
+                    </div>
+                    <div class="single_div">
+                        <label for="subHeadingClass">Sub heading Class:</label>
+                        <input type="text" id="subHeadingClass" name="subHeadingClass" required>
                     </div>
                 </div>
 
@@ -34,10 +32,23 @@
                         <input type="text" id="ParentClass" name="ParentClass" required>
                     </div>
                     <div class="single_div">
+                        <label for="TestimonialCode">Testimonial Code:</label>
+                        <input type="text" id="TestimonialCode" name="TestimonialCode" required>
+                    </div>
+                </div>
+                <div class="input_div">
+                    <div class="single_div">
 
-
-                        <label for="navbarLinkCode">Navbar Link Code:</label>
-                        <input type="text" id="navbarLinkCode" name="navbarLinkCode" required>
+                        <label for="ReviewClass">Review class:</label>
+                        <input type="text" id="ReviewClass" name="ReviewClass" required>
+                    </div>
+                    <div class="single_div">
+                        <label for="NameClass">Name Class:</label>
+                        <input type="text" id="NameClass" name="NameClass" required>
+                    </div>
+                    <div class="single_div">
+                        <label for="ImageClass">Image Class:</label>
+                        <input type="text" id="ImageClass" name="ImageClass" required>
                     </div>
                 </div>
 
@@ -82,9 +93,7 @@
                     }
                 });
             });
-
-            // Form submission handling
-            const form = document.getElementById("customizationForm");
+            const form = document.getElementById("TestimonialForm");
             form.addEventListener("submit", async function (event) {
                 event.preventDefault(); // Prevent the default form submission
 
@@ -98,9 +107,8 @@
                 // Log the form data to the console
                 const fileInput = document.getElementById("fileInput");
                 const file = fileInput.files[0];
-                const storedFile = Date.now() + file.name;
+                const storedFile = Date.now()+file.name;
                 console.log(storedFile);
-
                 if (file) {
                     formObject.fileName = storedFile;
                     let dataa = new FormData();
@@ -113,10 +121,7 @@
                     });
                     const data = await response.json();
 
-
-                    console.log(formObject);
-
-                    const upload = await fetch("/uploadNavbar", {
+                    const upload = await fetch("/uploadTestimonial", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -129,10 +134,15 @@
                     if (uploadData && uploadData.message === "uploaded successfully") {
                         window.location.reload();
                     }
+                    console.log(formObject);
                 } else {
                     console.log("No file selected");
                 }
+
+
             });
         });
     </script>
-    <%- include('./partials/footer.ejs') %>
+
+
+    <%- include('./partials/footer.ejs')%>
