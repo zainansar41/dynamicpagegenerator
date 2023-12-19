@@ -3,6 +3,7 @@ import generateBG from "../../assets/generateBG.jpeg";
 import "./right.css";
 import Navbar from "./Navbar";
 import Testimonial from "./Testmonial";
+import HeroRight from "./HeroRight";
 import { useNavigate } from "react-router-dom";
 import FooterRight from "./FooterRight";
 
@@ -29,7 +30,8 @@ export default function Right({ selectedContent }) {
       const navbarHtml = localStorage.getItem("navbarHtml");
       const testimonialHtml = localStorage.getItem("testimonialHtml");
       const footerHtml = localStorage.getItem("footerHTML");
-      let concatenatedHtml = navbarHtml + testimonialHtml + footerHtml;
+      const heroHtml = localStorage.getItem("heroHTML");
+      let concatenatedHtml = navbarHtml +heroHtml+ testimonialHtml + footerHtml;
       console.log(concatenatedHtml);
 
       // remove xmlns="http://www.w3.org/1999/xhtml
@@ -41,7 +43,8 @@ export default function Right({ selectedContent }) {
       const navbarCSS = localStorage.getItem("navbarCSS");
       const testimonialCSS = localStorage.getItem("testimonialCSS");
       const footerCSS = localStorage.getItem("footerCSS");
-      const concatenatedCSS = navbarCSS + testimonialCSS + footerCSS;
+      const heroCSS = localStorage.getItem("heroCSS");
+      const concatenatedCSS = navbarCSS + heroCSS +testimonialCSS + footerCSS;
 
       // Pass the concatenated HTML and CSS to the "/preview" route
       navigate("/preview", {
@@ -64,9 +67,7 @@ export default function Right({ selectedContent }) {
       break;
     case "Hero Section":
       contentToRender = (
-        <div>
-          <h1>Hero Section</h1>
-        </div>
+        <HeroRight/>
       );
       break;
     case "Cards":

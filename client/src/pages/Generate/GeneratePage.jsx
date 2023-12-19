@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Right from "../../components/generateRIght/Right";
 import "./generatePage.css";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 export default function GeneratePage() {
   const [selectedContent, setSelectedContent] = useState(null);
@@ -11,6 +13,7 @@ export default function GeneratePage() {
 
   return (
     <>
+      <Navbar />
       <div className="GenratePage_div">
         <div className="leftOptions">
           <h1>Content</h1>
@@ -43,6 +46,7 @@ export default function GeneratePage() {
           <Right selectedContent={selectedContent} />
         </div>
       </div>
+      <Footer />
     </>
   );
 }

@@ -1,27 +1,31 @@
-import './App.css';
-import Signin from './pages/AuthPages/Signin';
-import Signup from './pages/AuthPages/Signup';
-import Home from './pages/Home/Home';
+import "./App.css";
+import Signin from "./pages/AuthPages/Signin";
+import Signup from "./pages/AuthPages/Signup";
+import Home from "./pages/Home/Home";
 
-import LivePreview from './pages/Generate/LivePreview';
-import GeneratePage from './pages/Generate/GeneratePage';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
+import LivePreview from "./pages/Generate/LivePreview";
+import GeneratePage from "./pages/Generate/GeneratePage";
+import { useEffect, useState } from "react";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
-  // Determine if the user is on signin or signup page
-  const isAuthPage = window.location.pathname.includes("/signin") || window.location.pathname.includes("/signup") || window.location.pathname.includes("/preview");
+  const [path, setPath] = useState(false);
 
+  useEffect(() => {
+    if (
+      window.location.pathname === "/signin" ||
+      window.location.pathname === "/signup" ||
+      window.location.pathname === "/preview"
+    ) {
+      setPath(true);
+    } else {
+      setPath(false);
+    }
+  }, []);
   return (
     <>
       <Router>
-        {!isAuthPage && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/generate" element={<GeneratePage />} />
@@ -29,7 +33,6 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/preview" element={<LivePreview />} />
         </Routes>
-        {!isAuthPage && <Footer />}
       </Router>
     </>
   );

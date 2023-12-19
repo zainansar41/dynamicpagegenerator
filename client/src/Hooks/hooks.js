@@ -47,3 +47,12 @@ export async function getFooters(){
         return error
     }
 }
+
+export async function getHero(){
+    try {
+        const {data, status} = await axios.get('/api/heros')
+        return {data, status}
+    } catch (error) {
+        return error
+    }
+}
