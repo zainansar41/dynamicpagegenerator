@@ -3,6 +3,7 @@ import User from "../../models/user.js";
 import Navbar from "../../models/navbar.js";
 import Testimonial from "../../models/testimonial.js";
 import Footer from "../../models/footer.js";
+import Hero from "../../models/hero.js";
 
 export async function GetLogin(req, res) {
   try {
@@ -220,6 +221,40 @@ export async function uploadFooter(req, res) {
       user: req.session.user,
     });
 
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function GetHero(req, res) {
+  try {
+    res.render("Hero", { user: req.session.user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+export async function uploadHero(req, res){
+  try {
+    const {buttonClass, cssCode, fileName, heading, htmlCode, name, paraClass}= req.body
+
+    const newHero = new Hero({
+      name,
+      heading,
+      paraClass,
+      buttonClass,
+      htmlCode,
+      cssCode,
+      image: fileName,
+      creator: req.session.user.name,
+    })
+
+    await newHero.save();
+
+    res.status(201).send({
+      message: "uploaded successfully",
+      user: req.session.user,
+    });
+    
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

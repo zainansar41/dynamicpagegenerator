@@ -21,6 +21,8 @@ router.route('/api/testimonials').get(ApiControllers.GetAllTestimonial)
 router.route('/footer').get(appAuth,AppControllers.GetFooter)
 router.route('/uploadFooter').post(AppControllers.uploadFooter)
 router.route('/api/footers').get(ApiControllers.GetAllFooter)
+router.route('/hero').get(appAuth,AppControllers.GetHero)
+router.route('/uploadHero').post(AppControllers.uploadHero)
 
 
 export default router;
