@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../../models/user.js";
 import Navbar from "../../models/navbar.js";
 import Testimonial from "../../models/testimonial.js";
+import Footer from "../../models/footer.js";
 
 export async function GetLogin(req, res) {
   try {
@@ -128,11 +129,21 @@ export async function GetTestimonial(req, res) {
   }
 }
 
-
-export async function uploadTestimonial(req, res){
+export async function uploadTestimonial(req, res) {
   try {
-
-    const {name, headingClass, subHeadingClass, ParentClass, TestimonialCode, ReviewClass, NameClass, htmlCode, cssCode, fileName, ImageClass} = req.body;
+    const {
+      name,
+      headingClass,
+      subHeadingClass,
+      ParentClass,
+      TestimonialCode,
+      ReviewClass,
+      NameClass,
+      htmlCode,
+      cssCode,
+      fileName,
+      ImageClass,
+    } = req.body;
     console.log(req.body);
 
     const newTestimonial = new Testimonial({
@@ -147,8 +158,8 @@ export async function uploadTestimonial(req, res){
       nameClass: NameClass,
       imageClass: ImageClass,
       image: fileName,
-      creator: req.session.user.name
-    })
+      creator: req.session.user.name,
+    });
 
     await newTestimonial.save();
 
@@ -156,7 +167,58 @@ export async function uploadTestimonial(req, res){
       message: "uploaded successfully",
       user: req.session.user,
     });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
 
+export async function GetFooter(req, res) {
+  try {
+    res.render("Footer", { user: req.session.user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function uploadFooter(req, res) {
+  try {
+    const {
+      AddressClass,
+      EmailClass,
+      FooterLinkCode,
+      ParentClass,
+      cssCode,
+      fileInput,
+      fileName,
+      htmlCode,
+      linkClass,
+      logo,
+      name,
+      phoneNoClass,
+    } = req.body;
+    console.log(req.body);
+
+    const newFooter = new Footer({
+      footerName: name,
+      logoClass: logo,
+      emailClass: EmailClass,
+      addressClass: AddressClass,
+      phoneClass: phoneNoClass,
+      linkParentClass: ParentClass,
+      linkClass,
+      linkCode: FooterLinkCode,
+      htmlCode,
+      cssCode,
+      image: fileName,
+      creator: req.session.user.name,
+    })
+
+    await newFooter.save();
+
+    res.status(201).send({
+      message: "uploaded successfully",
+      user: req.session.user,
+    });
 
   } catch (error) {
     res.status(500).send({ message: error.message });
