@@ -2,6 +2,7 @@ import User from "../../models/user.js";
 import Navbar from "../../models/navbar.js";
 import Testimonial from "../../models/testimonial.js"
 import Footer from "../../models/footer.js";
+import Hero from "../../models/hero.js";
 import ENV from "../../config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -110,6 +111,15 @@ export async function GetAllFooter(req, res) {
   try {
     const footers = await Footer.find();
     res.status(200).send(footers);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
+export async function getAllHeros(req, res) {
+  try {
+    const heros = await Hero.find();
+    res.status(200).send(heros);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
