@@ -1,58 +1,66 @@
 import React, { useState } from "react";
 import generateBG from "../../assets/generateBG.jpeg";
-import Pagination from "../Pagination/Pagination";
 import "./right.css";
 import Navbar from "./Navbar";
-import Testimonial from "./Testmonial"
+import Testimonial from "./Testmonial";
 import { useNavigate } from "react-router-dom";
-
+import FooterRight from "./FooterRight";
 
 export default function Right({ selectedContent }) {
   const navigate = useNavigate();
   let contentToRender;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [footerColor, setFooterColor] = useState("#000000");
-  const [pageEmail, setPageEmail] = useState("");
-  const [pagePhone, setPagePhone] = useState("");
 
   const [links, setLinks] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const handleAddLink = (newLink) => {
     setLinks([...links, newLink]);
   };
 
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-
   const handlePreview = () => {
-    // Get HTML and CSS from localStorage or your state
-    const navbarHtml = localStorage.getItem("navbarHtml");
-    const testimonialHtml = localStorage.getItem("testimonialHtml");
-    const concatenatedHtml = navbarHtml + testimonialHtml;
-    console.log(concatenatedHtml);
-    // remove xmlns="http://www.w3.org/1999/xhtml 
-    // concatenatedHtml = concatenatedHtml.replace('xmlns="http://www.w3.org/1999/xhtml"', "");
-  
-    const navbarCSS = localStorage.getItem("navbarCSS");
-    const testimonialCSS = localStorage.getItem("testimonialCSS");
-    const concatenatedCSS = navbarCSS + testimonialCSS;
-  
-    // Pass the concatenated HTML and CSS to the "/preview" route
-    navigate("/preview", {
-      state: {
-        html: concatenatedHtml,
-        css: concatenatedCSS,
-      },
-    });
-  };
-  
+    setLoading(true);
 
+    // Add a random delay between 1 and 4 seconds
+    const delay = Math.floor(Math.random() * (4000 - 1000 + 1) + 1000);
+
+    // Use setTimeout to simulate the delay
+    setTimeout(() => {
+      // Get HTML and CSS from localStorage or your state
+      const navbarHtml = localStorage.getItem("navbarHtml");
+      const testimonialHtml = localStorage.getItem("testimonialHtml");
+      const footerHtml = localStorage.getItem("footerHTML");
+      let concatenatedHtml = navbarHtml + testimonialHtml + footerHtml;
+      console.log(concatenatedHtml);
+
+      // remove xmlns="http://www.w3.org/1999/xhtml
+      concatenatedHtml = concatenatedHtml.replace(
+        'xmlns="http://www.w3.org/1999/xhtml"',
+        ""
+      );
+
+      const navbarCSS = localStorage.getItem("navbarCSS");
+      const testimonialCSS = localStorage.getItem("testimonialCSS");
+      const footerCSS = localStorage.getItem("footerCSS");
+      const concatenatedCSS = navbarCSS + testimonialCSS + footerCSS;
+
+      // Pass the concatenated HTML and CSS to the "/preview" route
+      navigate("/preview", {
+        state: {
+          html: concatenatedHtml,
+          css: concatenatedCSS,
+        },
+      });
+
+      // Reset loading state after the delay
+      setLoading(false);
+    }, delay);
+  };
 
   switch (selectedContent) {
     case "Navbar":
-      contentToRender = <Navbar selectedContent={selectedContent} onAddLink={handleAddLink}/>;
+      contentToRender = (
+        <Navbar selectedContent={selectedContent} onAddLink={handleAddLink} />
+      );
       break;
     case "Hero Section":
       contentToRender = (
@@ -69,7 +77,12 @@ export default function Right({ selectedContent }) {
       );
       break;
     case "Testimonials":
-      contentToRender = <Testimonial selectedContent={selectedContent} onAddLink={handleAddLink}/>;
+      contentToRender = (
+        <Testimonial
+          selectedContent={selectedContent}
+          onAddLink={handleAddLink}
+        />
+      );
 
       break;
     case "Forms":
@@ -80,49 +93,7 @@ export default function Right({ selectedContent }) {
       );
       break;
     case "Footer":
-      contentToRender = (
-        <div>
-          <h1>Footer</h1>
-          <Pagination
-            totalItems={200}
-            itemsPerPage={10}
-            onPageChange={handlePageChange}
-          />
-
-          <div className="inputs">
-            <h2>Add Basic Info</h2>
-            <div className="input">
-              <label>Footer Color:</label>
-              <input
-                type="color"
-                value={footerColor}
-                onChange={(e) => setFooterColor(e.target.value)}
-              />
-            </div>
-            <div className="links_input">
-              <div className="input">
-                <label>Email:</label>
-                <input
-                  type="text"
-                  value={pageEmail}
-                  onChange={(e) => setPageEmail(e.target.value)}
-                />
-              </div>
-              <div className="input">
-                <label>Phone number</label>
-                <input
-                  type="text"
-                  value={pagePhone}
-                  onChange={(e) => setPagePhone(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="button-container">
-              <button>Save</button>
-            </div>
-          </div>
-        </div>
-      );
+      contentToRender = <FooterRight selectedContent={selectedContent} />;
       break;
     case "Others":
       contentToRender = (
@@ -166,10 +137,17 @@ export default function Right({ selectedContent }) {
 
   return (
     <>
-      {contentToRender}{" "}
-      <button className="preview" onClick={handlePreview}>
-        Preview
-      </button>
+      <>
+        {contentToRender}{" "}
+        <button className="preview" onClick={handlePreview}>
+          Preview
+        </button>
+        {loading && (
+          <div className="loading-screen">
+            <div className="loading-spinner"></div>
+          </div>
+        )}
+      </>
     </>
   );
 }

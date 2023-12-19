@@ -41,6 +41,7 @@ export default function Navbar({ selectedContent, onAddLink }) {
   };
 
   const handleSave = () => {
+    localStorage.setItem("links", JSON.stringify(links));
     modifyNavbarHtml(
       navbarData.htmlCode,
       navbarData,
@@ -58,13 +59,13 @@ export default function Navbar({ selectedContent, onAddLink }) {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedNavbars = navbars.slice(startIndex, endIndex);
+  const displayedCards = navbars.slice(startIndex, endIndex);
 
   return (
     <div className="container">
       <h1>{selectedContent}</h1>
       <div className="cards_container">
-        {displayedNavbars.map((navbar, index) => (
+        {displayedCards.map((navbar, index) => (
           <button onClick={() => handleCardClick(index)} style={{background:'none', border:'none'}}>
             <Card
               key={navbar._id}

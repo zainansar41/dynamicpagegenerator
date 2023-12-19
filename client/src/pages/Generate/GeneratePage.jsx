@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
 import Right from "../../components/generateRIght/Right";
 import "./generatePage.css";
 
@@ -12,7 +11,6 @@ export default function GeneratePage() {
 
   return (
     <>
-      <Navbar />
       <div className="GenratePage_div">
         <div className="leftOptions">
           <h1>Content</h1>

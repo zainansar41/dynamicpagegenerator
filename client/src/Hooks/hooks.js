@@ -38,3 +38,12 @@ export async function getTestimonials(){
         return error
     }
 }
+
+export async function getFooters(){
+    try {
+        const {data, status} = await axios.get('/api/footers')
+        return {data, status}
+    } catch (error) {
+        return error
+    }
+}

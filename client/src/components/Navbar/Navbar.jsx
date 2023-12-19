@@ -13,7 +13,7 @@ export default function Navbar() {
         </label>
         <div className="content">
           <div className="logo">
-            <Link to="#">Navbar</Link>
+            <Link to="#">Code Generator</Link>
           </div>
           <ul className="links">
             <li>
