@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import generateBG from "../../assets/generateBG.jpeg";
 import "./right.css";
 import Navbar from "./Navbar";
@@ -10,6 +10,16 @@ import FooterRight from "./FooterRight";
 export default function Right({ selectedContent }) {
   const navigate = useNavigate();
   let contentToRender;
+  useEffect(() => {
+    localStorage.setItem("navbarHtml", "");
+    localStorage.setItem("navbarCSS", "");
+    localStorage.setItem("testimonialHtml", "");
+    localStorage.setItem("testimonialCSS", "");
+    localStorage.setItem("footerHTML", "");
+    localStorage.setItem("footerCSS", "");
+    localStorage.setItem("heroHTML", "");
+    localStorage.setItem("heroCSS", "");
+  }, []);
 
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
