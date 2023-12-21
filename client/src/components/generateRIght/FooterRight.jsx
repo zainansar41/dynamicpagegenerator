@@ -47,8 +47,7 @@ export default function FooterRight() {
   };
   const handleCardClick = (index) => {
     console.log("handleCardClick called");
-    console.log(footers[index]);
-    setFooterData(footers[index]);
+    setFooterData(displayedCards[index]);
   };
 
   return (

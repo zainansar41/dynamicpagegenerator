@@ -28,7 +28,7 @@ export default function HeroRight() {
   const displayedCards = heroArray && heroArray.slice(startIndex, endIndex); // Check if heroArray is defined
 
   const handleCardClick = (index) => {
-    setHeroData(heroArray[index]);
+    setHeroData(displayedCards[index]);
 
     console.log(heroData);
   };

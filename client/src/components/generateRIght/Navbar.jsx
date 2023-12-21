@@ -22,7 +22,6 @@ export default function Navbar({ selectedContent, onAddLink }) {
     getNavbars().then((res) => {
       console.log(res);
       setNavbars(res.data);
-      setNavbarData(res.data[0]);
       localStorage.setItem("navbarHtml", "");
       localStorage.setItem("navbarCSS", "");
     });
@@ -53,8 +52,8 @@ export default function Navbar({ selectedContent, onAddLink }) {
 
   const handleCardClick = (index) => {
     console.log("handleCardClick called");
-    console.log(navbars[index]);
-    setNavbarData(navbars[index]);
+    setNavbarData(displayedCards[index]);
+    console.log(navbarData);
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
