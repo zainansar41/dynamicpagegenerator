@@ -156,6 +156,7 @@ export default function Right({ selectedContent }) {
         {loading && (
           <div className="loading-screen">
             <div className="loading-spinner"></div>
+            <h2>Generating Code</h2>
           </div>
         )}
       </>

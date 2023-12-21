@@ -16,7 +16,7 @@ export default function Navbar({ selectedContent, onAddLink }) {
   const [linkUrl, setLinkUrl] = useState("");
   const [links, setLinks] = useState([]);
   const [navColor, setNavColor] = useState("#000000");
-  const itemsPerPage = 3;
+  const itemsPerPage = 1;
 
   useEffect(() => {
     getNavbars().then((res) => {

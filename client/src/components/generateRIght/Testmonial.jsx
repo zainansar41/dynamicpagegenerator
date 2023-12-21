@@ -25,7 +25,7 @@ export default function Testimonial({ selectedContent }) {
     });
   }, []);
 
-  const itemsPerPage = 5; // Change the number of items per page
+  const itemsPerPage = 1; // Change the number of items per page
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

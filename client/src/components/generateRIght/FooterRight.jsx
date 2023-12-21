@@ -15,7 +15,7 @@ export default function FooterRight() {
   const [footers, setFooters] = useState([]);
   const [footerData, setFooterData] = useState({});
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 1;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -70,7 +70,7 @@ export default function FooterRight() {
         ))}
       </div>
       <Pagination
-        totalItems={5}
+        totalItems={footers.length}
         itemsPerPage={itemsPerPage}
         onPageChange={handlePageChange}
       />

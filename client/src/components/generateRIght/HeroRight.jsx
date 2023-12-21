@@ -12,7 +12,7 @@ export default function HeroRight() {
   const [paragraph, setParagraph] = useState("");
   const [buttonText, setButtonText] = useState("");
   const [BGcolor, setBGcolor] = useState("");
-  const itemsPerPage = 3;
+  const itemsPerPage = 1;
 
   useEffect(() => {
     getHero().then((res) => {
